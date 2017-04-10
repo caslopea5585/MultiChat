@@ -8,6 +8,8 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -41,6 +43,7 @@ public class ClientMain extends JFrame implements ItemListener, ActionListener{
 	String ip;
 	Socket socket;
 	ClientThread ct;
+	String nickName="sangwoon";
 	
 	public ClientMain() {
 		p_north = new JPanel();
@@ -90,6 +93,7 @@ public class ClientMain extends JFrame implements ItemListener, ActionListener{
 		setBounds(300, 100, 300, 400);
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		
 	}
 	
 	//데이터베이스 가져오기!!
@@ -158,11 +162,14 @@ public class ClientMain extends JFrame implements ItemListener, ActionListener{
 			e.printStackTrace();
 		}
 	}
-
+	
 
 	
 	public void actionPerformed(ActionEvent e) {
+		
+		
 		connect();
+		
 	}
 	
 	public static void main(String[] args) {

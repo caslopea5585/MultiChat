@@ -10,6 +10,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -28,9 +29,10 @@ public class ServerMain extends JFrame implements ActionListener,Runnable{
 	Thread thread; //서버 가동용 쓰레드
 	ServerSocket server;
 	Socket socket;
-	BufferedReader buffr;
-	BufferedWriter buffw;
 	
+	//멀티캐스팅을 위해서는 현재 서버에 몇명이 들어오고 나가는지를 체크할 저장소가 필요하며,
+	//유연해야 하므로 컬렉션 계열로 선언하자
+	Vector<ServerThread> list=new Vector<ServerThread>();
 	
 	public ServerMain() {
 		p_north = new JPanel();
@@ -63,9 +65,13 @@ public class ServerMain extends JFrame implements ActionListener,Runnable{
 				area.append(ip+" 접속자발견\n");
 				
 				//접속자마다 쓰레드를 하나씩 할당해서 대화를 나누게 해준다
-				ServerThread st = new ServerThread(socket, area);
-				st.start(); //쓰레드 동작!
+				ServerThread st = new ServerThread(socket,this);
 				
+				st.start(); //쓰레드 동작!
+
+				list.add(st);	//접속자가 발견되면, 이 접속자와 대화를 나눌 쓰레드를 Vector에 담는다.
+				
+				area.append("현재 접속자는 ? "+ list.size()+"\n");
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

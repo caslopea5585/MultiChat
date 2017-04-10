@@ -46,8 +46,11 @@ public class ClientThread extends Thread{
 	}
 	public void send(String msg){
 		try {
-			buffw.write(msg+"\n");
+			//현재 접속한 자 전부
+	
+			buffw.write(main.nickName+"의 말 : "+msg+"\n");
 			buffw.flush();
+	
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
